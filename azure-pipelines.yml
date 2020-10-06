@@ -25,14 +25,12 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-
-- task: codesigning@2
+- task: MSBuild@1
   inputs:
-    secureFileId: 'cert2'
-    signCertPassword: 'hello12'
-    files: '**/Release/*.dll'
-    timeServer: 'http://timestamp.digicert.com'
-    hashingAlgorithm: 'SHA256'  
+    solution: '**/*.sln'
+    msbuildArguments: '/target:publish /p:PublishURL=http://app-staging.example.com/ /p:ApplicationVersion=$(AssemblyVersion) /p:UpdateEnabled=true /p:UpdateMode=Foreground /p:ProductName=WPFPOC /p:OutputPath="$(build.ArtifactStagingDirectory)\Publish\\"'
+    clean: true
+    createLogFile: true
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
