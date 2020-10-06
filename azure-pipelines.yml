@@ -30,6 +30,13 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+  inputs:
+    Contents: |
+      **\bin\**\*.exe
+      **\bin\**\*.dll
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 - task: AzureKeyVault@1
   inputs:
     azureSubscription: 'wpfsignconn'
