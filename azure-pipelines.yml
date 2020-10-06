@@ -28,7 +28,7 @@ steps:
 - task: MSBuild@1
   inputs:
     solution: '**/*.sln'
-    msbuildArguments: '/target:publish /p:PublishURL=http://app-staging.example.com/ /p:UpdateEnabled=true /p:UpdateMode=Foreground /p:ProductName=WPFPOC /p:OutputPath="$(Build.ArtifactStagingDirectory)\Publish\"'
+    msbuildArguments: '/target:publish /p:PublishURL=http://app-staging.example.com/ /p:UpdateEnabled=true /p:UpdateMode=Foreground /p:ProductName=WPFPOC /p:OutputPath="$(Build.ArtifactStagingDirectory)\Publish\\"'
     clean: true
     createLogFile: true
 - task: PublishPipelineArtifact@1
