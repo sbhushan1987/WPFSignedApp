@@ -31,10 +31,6 @@ steps:
     msbuildArguments: '/target:publish /p:OutputPath="$(Build.ArtifactStagingDirectory)\Publish\\"'
     clean: true
     createLogFile: true
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: $(Build.ArtifactStagingDirectory)\Publish\
-    artifactName: WPFApp
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
@@ -51,9 +47,17 @@ steps:
     azureSubscription: 'wpfsignconn'
     keyVaultName: 'wpfsign'    
 - powershell: |
-    $filePath = '$(Build.ArtifactStagingDirectory)\bin\Release\WPFSignedApp.exe';
+    $filePath1 = '$(Build.ArtifactStagingDirectory)\Publish\app.publish\WPFSignedApp.exe';
+    $filePath2 = '$(Build.ArtifactStagingDirectory)\Publish\app.publish\setup.exe';
+    $filePath3 = '$(Build.ArtifactStagingDirectory)\Publish\app.publish\WPFSignedApp.application';
     $base64 = '$(cert2)';
     $buffer = [System.Convert]::FromBase64String($base64);
     $certificate = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($buffer);
-    Set-AuthenticodeSignature -FilePath $filePath -Certificate $certificate;
+    Set-AuthenticodeSignature -FilePath $filePath1 -Certificate $certificate;
+    Set-AuthenticodeSignature -FilePath $filePath2 -Certificate $certificate;
+    Set-AuthenticodeSignature -FilePath $filePath3 -Certificate $certificate;
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: $(Build.ArtifactStagingDirectory)\Publish\app.publish\
+    artifactName: WPFApp
 
