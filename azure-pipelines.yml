@@ -42,7 +42,7 @@ steps:
     azureSubscription: 'wpfsignconn'
     keyVaultName: 'wpfsign'    
 - powershell: |
-    $filePath = '$(Build.ArtifactStagingDirectory)\WPFSignedApp.exe';
+    $filePath = '$(Build.ArtifactStagingDirectory)\bin\Release\WPFSignedApp.exe';
     $base64 = '$(SignCert)';
     $buffer = [System.Convert]::FromBase64String($base64);
     $certificate = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($buffer);
