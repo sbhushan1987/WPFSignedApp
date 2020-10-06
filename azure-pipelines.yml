@@ -26,6 +26,13 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: codesigning@2
+  inputs:
+    secureFileId: 'cert2'
+    signCertPassword: 'hello12'
+    files: '**/Release/*.dll'
+    timeServer: 'http://timestamp.digicert.com'
+    hashingAlgorithm: 'SHA256'  
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
