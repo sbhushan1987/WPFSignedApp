@@ -28,16 +28,13 @@ steps:
 - task: MSBuild@1
   inputs:
     solution: '**/*.sln'
-    msbuildArguments: '/target:publish /p:PublishURL=http://app-staging.example.com/ /p:UpdateEnabled=true /p:UpdateMode=Foreground /p:ProductName=WPFPOC /p:OutputPath="$(Build.ArtifactStagingDirectory)\Publish\\"'
+    msbuildArguments: '/target:publish /p:OutputPath="$(Build.ArtifactStagingDirectory)\Publish\\"'
     clean: true
     createLogFile: true
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: $(Build.ArtifactStagingDirectory)\Publish\
     artifactName: WPFApp
-- task: DownloadPipelineArtifact@2
-  inputs:
-    artifact: WPFApp
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
