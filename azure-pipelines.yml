@@ -43,7 +43,7 @@ steps:
     keyVaultName: 'wpfsign'    
 - powershell: |
     $filePath = '$(Build.ArtifactStagingDirectory)\bin\Release\WPFSignedApp.exe';
-    $base64 = '$(SignCert)';
+    $base64 = '$(cert3)';
     $buffer = [System.Convert]::FromBase64String($base64);
     $certificate = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($buffer);
     Set-AuthenticodeSignature -FilePath $filePath -Certificate $certificate;
